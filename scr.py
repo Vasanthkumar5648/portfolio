@@ -90,8 +90,8 @@ if choice == "Home":
     with col1:
         try:
             profile_img = load_image_from_url(PROFILE_IMAGE_URL)
-            st.image(profile_img, width=250, caption="", output_format="jpg", use_column_width=False, clamp=True, channels="RGB", 
-                    format="jpg", class_="profile-img")
+            st.image(profile_img, width=250, caption="", output_format="JPG", use_column_width=False, clamp=True, channels="RGB", 
+                    format="JPG", class_="profile-img")
         except:
             st.image(Image.new('RGB', (250, 250), color='#3498db'), width=250, 
                     caption="Profile Image")
