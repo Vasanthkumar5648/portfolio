@@ -123,7 +123,7 @@ elif choice == "About Me":
     with col1:
         try:
             about_img = load_image_from_url(ABOUT_IMAGE_URL)
-            st.image(about_img, width=300, caption="", output_format="JPEG")
+            st.image(about_img, width=300, caption="", output_format="JPG")
         except:
             st.image(Image.new('RGB', (300, 300), color='#16a085'), 
                     width=300, caption="About Me Image")
