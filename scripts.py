@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-import pandas as pd
 import base64
 
 # Set page configuration
@@ -10,12 +9,66 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS styling
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# Embedded CSS styling
+def set_custom_style():
+    st.markdown("""
+    <style>
+    /* Main content styling */
+    .stApp {
+        background-color: #f8f9fa;
+    }
+    .stMarkdown h1 {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
+    .stMarkdown h2 {
+        color: #2980b9;
+    }
+    .stMarkdown h3 {
+        color: #16a085;
+    }
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #2c3e50 !important;
+    }
+    [data-testid="stSidebar"] .stMarkdown h1 {
+        color: white !important;
+        border-bottom: 2px solid #3498db;
+    }
+    [data-testid="stSidebar"] .stMarkdown {
+        color: white !important;
+    }
+    
+    /* Button styling */
+    .stDownloadButton button {
+        background-color: #3498db !important;
+        color: white !important;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+    
+    /* Expander styling */
+    .stExpander {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    /* Footer styling */
+    .footer {
+        text-align: center;
+        padding: 20px;
+        color: #7f8c8d;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-local_css("style.css")  # You can create a separate style.css file or define styles below
+set_custom_style()
 
 # Sidebar
 with st.sidebar:
@@ -37,37 +90,14 @@ with st.sidebar:
     st.markdown("[GitHub](#)", unsafe_allow_html=True)
     st.markdown("[Twitter](#)", unsafe_allow_html=True)
 
-# Profile image (replace with your own image)
-def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_png_as_page_bg(png_file):
-    bin_str = get_base64_of_bin_file(png_file)
-    page_bg_img = '''
-    <style>
-    .stApp {
-        background-image: url("data:image/png;base64,%s");
-        background-size: cover;
-        background-attachment: fixed;
-    }
-    </style>
-    ''' % bin_str
-    
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-    return
-
-#set_png_as_page_bg('background.png')  # Uncomment if you want a background image
-
 # Home Page
 if choice == "Home":
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        # Replace with your profile image
-        profile_img = Image.open("profile.jpg")  # Place your image in the same folder
-        st.image(profile_img, width=250)
+        # Placeholder for profile image (replace with actual image loading if available)
+        st.image(Image.new('RGB', (250, 250), color='#3498db'), width=250, 
+                caption="Profile Image (replace with your image)")
     
     with col2:
         st.title("Your Name")
@@ -78,13 +108,10 @@ if choice == "Home":
         and professional journey.
         """)
         
-        # Download resume button
-        with open("resume.pdf", "rb") as pdf_file:  # Replace with your resume file
-            PDFbyte = pdf_file.read()
-        
+        # Download resume button (placeholder)
         st.download_button(
             label="Download Resume",
-            data=PDFbyte,
+            data="This would be your resume content".encode(),
             file_name="YourName_Resume.pdf",
             mime="application/octet-stream",
         )
@@ -97,7 +124,8 @@ elif choice == "About Me":
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        st.image("about_me.jpg", width=300)  # Optional about me image
+        st.image(Image.new('RGB', (300, 300), color='#16a085'), 
+                width=300, caption="About Me Image")
     
     with col2:
         st.write("""
@@ -126,7 +154,8 @@ elif choice == "Projects":
         col1, col2 = st.columns([1, 2])
         
         with col1:
-            st.image("project1.jpg", width=250)  # Project image
+            st.image(Image.new('RGB', (250, 150), color='#e74c3c'), 
+                    width=250, caption="Project Screenshot")
         
         with col2:
             st.write("""
@@ -150,7 +179,8 @@ elif choice == "Projects":
         col1, col2 = st.columns([1, 2])
         
         with col1:
-            st.image("project2.jpg", width=250)  # Project image
+            st.image(Image.new('RGB', (250, 150), color='#9b59b6'), 
+                    width=250, caption="Project Screenshot")
         
         with col2:
             st.write("""
@@ -168,8 +198,6 @@ elif choice == "Projects":
             
             [View Project](#) | [GitHub Repository](#)
             """)
-    
-    # Add more projects as needed
 
 # Skills Page
 elif choice == "Skills":
@@ -179,9 +207,9 @@ elif choice == "Skills":
     # Technical Skills
     st.subheader("Technical Skills")
     tech_skills = {
-        "Skill Category 1": ["Skill 1", "Skill 2", "Skill 3"],
-        "Skill Category 2": ["Skill 1", "Skill 2", "Skill 3"],
-        "Skill Category 3": ["Skill 1", "Skill 2", "Skill 3"],
+        "Programming Languages": ["Python", "JavaScript", "SQL"],
+        "Frameworks": ["Streamlit", "React", "Django"],
+        "Tools": ["Git", "Docker", "AWS"],
     }
     
     for category, skills in tech_skills.items():
@@ -201,29 +229,29 @@ elif choice == "Experience":
     st.markdown("---")
     
     # Job 1
-    with st.expander("**Company 1 | Job Title** (Year - Year)", expanded=True):
+    with st.expander("**Company 1 | Job Title** (2020 - Present)", expanded=True):
         st.write("""
         ### Responsibilities
-        - Responsibility 1
-        - Responsibility 2
-        - Responsibility 3
+        - Developed and maintained web applications
+        - Collaborated with cross-functional teams
+        - Implemented new features and improvements
         
         ### Achievements
-        - Achievement 1
-        - Achievement 2
+        - Increased system performance by 30%
+        - Led a team of 5 developers
         """)
     
     # Job 2
-    with st.expander("**Company 2 | Job Title** (Year - Year)", expanded=False):
+    with st.expander("**Company 2 | Junior Developer** (2018 - 2020)", expanded=False):
         st.write("""
         ### Responsibilities
-        - Responsibility 1
-        - Responsibility 2
-        - Responsibility 3
+        - Assisted in development tasks
+        - Fixed bugs and issues
+        - Participated in code reviews
         
         ### Achievements
-        - Achievement 1
-        - Achievement 2
+        - Implemented key feature that improved user retention
+        - Received employee of the month award
         """)
 
 # Education Page
@@ -232,18 +260,18 @@ elif choice == "Education":
     st.markdown("---")
     
     # Education 1
-    with st.expander("**Degree Name** - University Name (Year - Year)", expanded=True):
+    with st.expander("**Bachelor of Science in Computer Science** - University Name (2014 - 2018)", expanded=True):
         st.write("""
-        - Major: Your Major
-        - GPA: X.XX/4.00
-        - Relevant Coursework: Course 1, Course 2, Course 3
+        - Major: Computer Science
+        - GPA: 3.8/4.00
+        - Relevant Coursework: Data Structures, Algorithms, Web Development
         """)
     
     # Certifications
     st.subheader("Certifications")
     certs = {
-        "Certification 1": "Issuing Organization (Year)",
-        "Certification 2": "Issuing Organization (Year)",
+        "AWS Certified Developer": "Amazon Web Services (2021)",
+        "Python Professional Certification": "Python Institute (2020)",
     }
     for cert, details in certs.items():
         st.write(f"- **{cert}**: {details}")
@@ -253,26 +281,18 @@ elif choice == "Contact":
     st.title("Get In Touch")
     st.markdown("---")
     
-    contact_form = """
-    <form action="https://formsubmit.co/your@email.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <textarea name="message" placeholder="Your message here"></textarea>
-        <button type="submit">Send</button>
-    </form>
-    """
-    
-    left_column, right_column = st.columns(2)
-    with left_column:
-        st.markdown(contact_form, unsafe_allow_html=True)
-    with right_column:
-        st.empty()
+    with st.form("contact_form"):
+        name = st.text_input("Your Name")
+        email = st.text_input("Your Email")
+        message = st.text_area("Your Message")
+        submitted = st.form_submit_button("Send Message")
+        if submitted:
+            st.success("Thank you for your message! I'll get back to you soon.")
 
 # Footer
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center;">
+<div class="footer">
     <p>© 2023 Your Name. All rights reserved.</p>
 </div>
 """, unsafe_allow_html=True)
