@@ -1,5 +1,7 @@
 import streamlit as st
 from PIL import Image
+import requests
+from io import BytesIO
 import base64
 
 # Set page configuration
@@ -8,6 +10,16 @@ st.set_page_config(
     page_icon="👨‍💼",
     layout="wide"
 )
+
+# Function to load image from URL
+def load_image_from_url(url):
+    response = requests.get(url)
+    img = Image.open(BytesIO(response.content))
+    return img
+
+# GitHub image URLs (replace with your actual image URLs)
+PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Vasanthkumar5648/your-repo/main/images/profile.jpg"
+ABOUT_IMAGE_URL = "https://raw.githubusercontent.com/Vasanthkumar5648/your-repo/main/images/about.jpg"
 
 # Custom CSS for black sidebar with white text
 st.markdown("""
@@ -41,6 +53,12 @@ st.markdown("""
     [data-testid="stSidebar"] a:hover {
         color: #3498db !important;
     }
+    
+    /* Image styling */
+    .profile-img {
+        border-radius: 50%;
+        border: 3px solid white;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -65,15 +83,18 @@ with st.sidebar:
     st.markdown("[GitHub](https://github.com/Vasanthkumar5648)")
     st.markdown("[Data Science Portfolio](https://www.datascienceportfol.io/vasanthkumar5648)")
 
-# Rest of your portfolio content remains the same...
-# [Include all your existing Home, About Me, Projects sections here]# Home Page
+# Home Page
 if choice == "Home":
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        # Placeholder for profile image (replace with actual image if available)
-        st.image(Image.new('RGB', (250, 250), color='#3498db'), width=250, 
-                caption="Profile Image")
+        try:
+            profile_img = load_image_from_url(PROFILE_IMAGE_URL)
+            st.image(profile_img, width=250, caption="", output_format="JPEG", use_column_width=False, clamp=True, channels="RGB", 
+                    format="JPEG", class_="profile-img")
+        except:
+            st.image(Image.new('RGB', (250, 250), color='#3498db'), width=250, 
+                    caption="Profile Image")
     
     with col2:
         st.title("Vasantha Kumar")
@@ -100,8 +121,12 @@ elif choice == "About Me":
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        st.image(Image.new('RGB', (300, 300), color='#16a085'), 
-                width=300, caption="About Me Image")
+        try:
+            about_img = load_image_from_url(ABOUT_IMAGE_URL)
+            st.image(about_img, width=300, caption="", output_format="JPEG")
+        except:
+            st.image(Image.new('RGB', (300, 300), color='#16a085'), 
+                    width=300, caption="About Me Image")
     
     with col2:
         st.write("""
@@ -120,7 +145,8 @@ elif choice == "About Me":
         open-source projects, and staying updated with the latest advancements in AI and ML.
         """)
 
-# Projects Page
+# [Rest of your pages (Projects, Skills, Experience, Education, Contact) would go here]
+# Keep the same content as before, just ensure proper indentation# Projects Page
 elif choice == "Projects":
     st.title("My Projects")
     st.markdown("---")
