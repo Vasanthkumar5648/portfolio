@@ -11,15 +11,19 @@ st.set_page_config(
     layout="wide"
 )
 
-# Function to load image from URL
-def load_image_from_url(url):
-    response = requests.get(url)
-    img = Image.open(BytesIO(response.content))
-    return img
+# Your GitHub image URL
+PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg"
 
-# GitHub image URLs (replace with your actual image URLs)
-PROFILE_IMAGE_URL ="https://raw.githubusercontent.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg"
-ABOUT_IMAGE_URL ="https://raw.githubusercontent.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg"
+# Function to load image from URL with error handling
+def load_image_from_url(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raises an HTTPError for bad responses
+        img = Image.open(BytesIO(response.content))
+        return img
+    except Exception as e:
+        st.error(f"Error loading image: {e}")
+        return None
 
 # Custom CSS for black sidebar with white text
 st.markdown("""
@@ -56,8 +60,9 @@ st.markdown("""
     
     /* Image styling */
     .profile-img {
-        border-radius: 50%;
+        border-radius: 10px;
         border: 3px solid white;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -88,12 +93,19 @@ if choice == "Home":
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        try:
-            profile_img = load_image_from_url(PROFILE_IMAGE_URL)
-            st.image(profile_img, width=250, caption="", output_format="JPG", use_column_width=False, clamp=True, channels="RGB", 
-                    format="JPG", class_="profile-img")
-        except:
-            st.image(Image.new('RGB', (250, 250), color='#3498db'), width=250, 
+        profile_img = load_image_from_url(PROFILE_IMAGE_URL)
+        if profile_img:
+            st.image(profile_img, 
+                    width=300, 
+                    caption="", 
+                    use_column_width=False,
+                    output_format="JPEG",
+                    clamp=True,
+                    channels="RGB",
+                    class_="profile-img")
+        else:
+            st.image(Image.new('RGB', (300, 300), color='#3498db'), 
+                    width=300, 
                     caption="Profile Image")
     
     with col2:
@@ -113,41 +125,7 @@ if choice == "Home":
             mime="application/octet-stream",
         )
 
-# About Me Page
-elif choice == "About Me":
-    st.title("About Me")
-    st.markdown("---")
-    
-    col1, col2 = st.columns([1, 2])
-    
-    with col1:
-        try:
-            about_img = load_image_from_url(ABOUT_IMAGE_URL)
-            st.image(about_img, width=300, caption="", output_format="JPG")
-        except:
-            st.image(Image.new('RGB', (300, 300), color='#16a085'), 
-                    width=300, caption="About Me Image")
-    
-    with col2:
-        st.write("""
-        ## Professional Profile
-        I am an aspiring Data Science Analyst with a unique combination of technical skills 
-        in data science and business acumen from my MBA in Aviation Management. My passion 
-        lies in transforming raw data into meaningful insights that drive strategic decisions.
-        
-        ### Career Objective
-        Seeking to leverage my analytical skills, Python and SQL expertise, and hands-on 
-        experience in data modeling to support strategic decision-making and drive impactful 
-        business insights at organizations like American Express.
-        
-        ### Personal Interests
-        Outside of work, I enjoy exploring new data visualization techniques, contributing to 
-        open-source projects, and staying updated with the latest advancements in AI and ML.
-        """)
-
-# [Rest of your pages (Projects, Skills, Experience, Education, Contact) would go here]
-# Keep the same content as before, just ensure proper indentation# Projects Page
-elif choice == "Projects":
+# [Rest of your pages (About Me, Projects, Skills, etc.) would go here]elif choice == "Projects":
     st.title("My Projects")
     st.markdown("---")
     
