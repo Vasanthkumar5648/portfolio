@@ -87,7 +87,7 @@ set_custom_style()
 
 # Sidebar
 with st.sidebar:
-    st.title("Navigation")
+    st.markdown("<h1 style='color: white;'>Navigation</h1>", unsafe_allow_html=True)
     menu = ["Home", "About Me", "Projects", "Skills", "Experience", "Education", "Contact"]
     choice = st.radio("Go to", menu)
     
