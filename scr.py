@@ -18,8 +18,8 @@ def load_image_from_url(url):
     return img
 
 # GitHub image URLs (replace with your actual image URLs)
-PROFILE_IMAGE_URL ="https://raw.github.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg"
-ABOUT_IMAGE_URL ="https://raw.github.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg"
+PROFILE_IMAGE_URL ="https://raw.githubusercontent.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg"
+ABOUT_IMAGE_URL ="https://raw.githubusercontent.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg"
 
 # Custom CSS for black sidebar with white text
 st.markdown("""
