@@ -99,7 +99,7 @@ if choice == "Home":
                     width=300, 
                     caption="", 
                     use_column_width=False,
-                    output_format="JPEG",
+                    output_format="JPG",
                     clamp=True,
                     channels="RGB",
                     class_="profile-img")
