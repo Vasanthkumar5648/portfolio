@@ -9,27 +9,42 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS to make all sidebar text white
+# Custom CSS for black sidebar with white text
 st.markdown("""
 <style>
-    /* Make all sidebar text white */
+    /* Black sidebar background */
+    [data-testid="stSidebar"] {
+        background-color: #000000 !important;
+    }
+    
+    /* White text for all sidebar content */
     [data-testid="stSidebar"] * {
         color: white !important;
     }
     
-    /* Style the radio buttons specifically */
+    /* White radio button labels */
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label {
         color: white !important;
     }
     
-    /* Change the radio button circle color */
+    /* White radio button circles */
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] div[data-baseweb="radio"] div:first-child {
         background-color: white !important;
+    }
+    
+    /* White links */
+    [data-testid="stSidebar"] a {
+        color: white !important;
+    }
+    
+    /* Hover effect for links */
+    [data-testid="stSidebar"] a:hover {
+        color: #3498db !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Sidebar navigation
+# Sidebar with black background
 with st.sidebar:
     st.title("Navigation")
     menu = ["Home", "About Me", "Projects", "Skills", "Experience", "Education", "Contact"]
@@ -49,7 +64,9 @@ with st.sidebar:
     st.markdown("[Tableau Portfolio](https://public.tableau.com/app/profile/vasantha.kumar2203/vizzes)")
     st.markdown("[GitHub](https://github.com/Vasanthkumar5648)")
     st.markdown("[Data Science Portfolio](https://www.datascienceportfol.io/vasanthkumar5648)")
-# Home Page
+
+# Rest of your portfolio content remains the same...
+# [Include all your existing Home, About Me, Projects sections here]# Home Page
 if choice == "Home":
     col1, col2 = st.columns([1, 2])
     
