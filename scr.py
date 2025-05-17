@@ -89,7 +89,7 @@ if choice == "Home":
     
     with col1:
         try:
-            profile_img = load_image_from_url(PROFILE_IMAGE_URL)
+            profile_img = load_image_from_url("https://github.com/Vasanthkumar5648/portfolio/main/image.jpg%20(2)%20(1).jpg")
             st.image(profile_img, width=250, caption="", output_format="JPEG", use_column_width=False, clamp=True, channels="RGB", 
                     format="JPEG", class_="profile-img")
         except:
