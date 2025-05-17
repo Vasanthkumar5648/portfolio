@@ -94,7 +94,7 @@ if choice == "Home":
     
     with col1:
         profile_img = load_image_from_url(PROFILE_IMAGE_URL)
-        if profile_img:
+        profile_img:
             st.image(profile_img, 
                     width=300, 
                     caption="", 
@@ -103,10 +103,6 @@ if choice == "Home":
                     clamp=True,
                     channels="RGB",
                     class_="profile-img")
-        else:
-            st.image(Image.new('RGB', (300, 300), color='#3498db'), 
-                    width=300, 
-                    caption="Profile Image")
     
     with col2:
         st.title("Vasantha Kumar")
