@@ -9,103 +9,46 @@ st.set_page_config(
     layout="wide"
 )
 
-# Embedded CSS styling
-def set_custom_style():
-    st.markdown("""
-    <style>
-    /* Main content styling */
-    .stApp {
-        background-color: #f8f9fa;
-        font-family: 'Arial', sans-serif;
-    }
-    .stMarkdown h1 {
-        color: #2c3e50;
-        border-bottom: 2px solid #3498db;
-        padding-bottom: 10px;
-    }
-    .stMarkdown h2 {
-        color: #2980b9;
-    }
-    .stMarkdown h3 {
-        color: #16a085;
-    }
-    
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        background-color: #2c3e50 !important;
-    }
-    [data-testid="stSidebar"] .stMarkdown h1 {
-        color: white !important;
-        border-bottom: 2px solid #3498db;
-    }
-    [data-testid="stSidebar"] .stMarkdown {
+# Custom CSS to make all sidebar text white
+st.markdown("""
+<style>
+    /* Make all sidebar text white */
+    [data-testid="stSidebar"] * {
         color: white !important;
     }
     
-    /* Contact links */
-    .contact-link {
+    /* Style the radio buttons specifically */
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label {
         color: white !important;
-        text-decoration: none;
-        display: block;
-        margin: 5px 0;
-    }
-    .contact-link:hover {
-        color: #3498db !important;
     }
     
-    /* Project cards */
-    .project-card {
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    /* Change the radio button circle color */
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] div[data-baseweb="radio"] div:first-child {
+        background-color: white !important;
     }
-    
-    /* Skill chips */
-    .skill-chip {
-        display: inline-block;
-        background-color: #3498db;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 20px;
-        margin: 5px;
-        font-size: 0.8em;
-    }
-    
-    /* Footer styling */
-    .footer {
-        text-align: center;
-        padding: 20px;
-        color: #7f8c8d;
-        margin-top: 50px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+</style>
+""", unsafe_allow_html=True)
 
-set_custom_style()
-
-# Sidebar
+# Sidebar navigation
 with st.sidebar:
-    st.markdown("<h1 style='color: white;'>Navigation</h1>", unsafe_allow_html=True)
+    st.title("Navigation")
     menu = ["Home", "About Me", "Projects", "Skills", "Experience", "Education", "Contact"]
     choice = st.radio("Go to", menu)
     
-    # Contact information in sidebar
+    # Contact information
     st.markdown("---")
     st.subheader("Contact Info")
-    st.markdown(f'<a class="contact-link" href="mailto:vasanthkumar5648@gmail.com">📧 vasanthkumar5648@gmail.com</a>', unsafe_allow_html=True)
-    st.markdown('<p class="contact-link">📞 +91 9791585648</p>', unsafe_allow_html=True)
-    st.markdown('<p class="contact-link">📍 Chennai, India</p>', unsafe_allow_html=True)
+    st.markdown("📧 vasanthkumar5648@gmail.com")
+    st.markdown("📞 +91 9791585648")
+    st.markdown("📍 Chennai, India")
     
     # Social media links
     st.markdown("---")
     st.subheader("Connect With Me")
-    st.markdown('<a class="contact-link" href="https://www.linkedin.com/in/vasantha-kumar-p-99119a2b3" target="_blank">LinkedIn</a>', unsafe_allow_html=True)
-    st.markdown('<a class="contact-link" href="https://public.tableau.com/app/profile/vasantha.kumar2203/vizzes" target="_blank">Tableau Portfolio</a>', unsafe_allow_html=True)
-    st.markdown('<a class="contact-link" href="https://github.com/Vasanthkumar5648" target="_blank">GitHub</a>', unsafe_allow_html=True)
-    st.markdown('<a class="contact-link" href="https://www.datascienceportfol.io/vasanthkumar5648" target="_blank">Data Science Portfolio</a>', unsafe_allow_html=True)
-
+    st.markdown("[LinkedIn](https://www.linkedin.com/in/vasantha-kumar-p-99119a2b3)")
+    st.markdown("[Tableau Portfolio](https://public.tableau.com/app/profile/vasantha.kumar2203/vizzes)")
+    st.markdown("[GitHub](https://github.com/Vasanthkumar5648)")
+    st.markdown("[Data Science Portfolio](https://www.datascienceportfol.io/vasanthkumar5648)")
 # Home Page
 if choice == "Home":
     col1, col2 = st.columns([1, 2])
